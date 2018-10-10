@@ -15,7 +15,7 @@ anaconda 3 :
 ```
 export PATH=~/anaconda3/bin:$PATH
 ```
-Then you should be able to do 
+Then do the following the create and activate the environment
 ```
 conda env create -f environment.yml
 ```
