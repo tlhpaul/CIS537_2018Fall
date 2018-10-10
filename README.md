@@ -6,7 +6,7 @@ We use conda yaml file to configure the enviornment. You can find
 the shell file here: https://conda.io/miniconda.html
 
 ### Install
-After running shell file, do the following
+After running shell script, do the following
 
 anaconda 2 :
 ```
