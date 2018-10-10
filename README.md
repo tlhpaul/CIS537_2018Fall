@@ -6,7 +6,8 @@ We use conda yaml file to configure the enviornment. You can find
 the shell file here: https://conda.io/miniconda.html
 
 ### Install
-After running shell file, do the following\n
+After running shell file, do the following
+
 anaconda 2 :
 ```
 export PATH=~/anaconda2/bin:$PATH
