@@ -20,6 +20,6 @@ Then you should be able to do
 conda env create -f environment.yml
 ```
 ```
-conda activate cis537
+source activate cis537
 ```
 Then when running python files, they will be in this envrionment.
