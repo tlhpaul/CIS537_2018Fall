@@ -3,7 +3,7 @@ CIS 537 Biomedical Image Analysis - Gastounioti/Kontos Project
 
 ## Set up conda environment 
 We use conda yaml file to configure the enviornment. You can find
-the shell file here: https://conda.io/miniconda.html
+the shell script here: https://conda.io/miniconda.html
 
 ### Install
 After running shell script, do the following
