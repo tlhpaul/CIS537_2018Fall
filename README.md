@@ -6,7 +6,7 @@ We use conda yaml file to configure the enviornment. You can find
 the shell file here: https://conda.io/miniconda.html
 
 ### Install
-After running shell file, do the following
+After running shell file, do the following\n
 anaconda 2 :
 ```
 export PATH=~/anaconda2/bin:$PATH
@@ -15,7 +15,7 @@ anaconda 3 :
 ```
 export PATH=~/anaconda3/bin:$PATH
 ```
-Then do the following the create and activate the environment
+Then do the following to create and activate the environment
 ```
 conda env create -f environment.yml
 ```
