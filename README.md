@@ -1,7 +1,7 @@
 # CIS537_2018Fall
 CIS 537 Biomedical Image Analysis - Gastounioti/Kontos Project
 
-## Set up conda environment 
+## Set up conda environment
 We use conda yaml file to configure the enviornment. You can find
 the shell script here: https://conda.io/miniconda.html
 
@@ -24,3 +24,8 @@ conda env create -f environment.yml
 source activate cis537
 ```
 Then when running python files, they will be in this envrionment.
+
+Note, to exit the environment, simply run
+```
+conda deactivate
+```
