@@ -11,7 +11,6 @@ import timeit
 import _pickle as cPickle
 import numpy as np
 import tensorflow as tf
-# import yaml
 
 
 class LeNetConvPoolLayer(object):
@@ -23,6 +22,9 @@ class LeNetConvPoolLayer(object):
         fan_in=np.prod(filter_shape[1:])
         fan_out = (filter_shape[0]*np.prod(filter_shape[2:])/np.prod(poolsize))
         W_bound=np.sqrt(6./(fan_in + fan_out))
+
+
+        #TODO need to change these theano to tensorlow
         self.W= theano.shared(
             np.asarray(rng.uniform(low=-W_bound,high=W_bound,size=filter_shape),
                        dtype=theano.config.floatX),borrow=True)
@@ -43,16 +45,59 @@ class LeNetConvPoolLayer(object):
             ds=poolsize,
             ignore_border=True)
             
-        self.output=T.tanh(pooled_out + self.b.dimshuffle('x',0,'x','x'))
+        #change 1
+        # change it from self.output=T.tanh(pooled_out + self.b.dimshuffle('x',0,'x','x'))
+        # to the live below
+        self.output=tf.tanh(pooled_out + self.b.dimshuffle('x',0,'x','x'))
         self.params = [self.W,self.b]
-        self.input = input               
+        self.input = input  
 
+
+class conv_classifier(object):
+	def __init__(self,rng,input,batch_size,nkerns=[5,3,3]):
+         
+    # Reshape matrix of rasterized images of shape (batch_size, 28 * 28)
+    # to a 4D tensor, compatible with our LeNetConvPoolLayer
+    # (28, 28) is the size of MNIST images.
+        layer0_input=input.reshape((batch_size,29,36,30))
+        
+        layer0 = LeNetConvPoolLayer(
+        rng=rng,
+        input=layer0_input,
+        image_shape=(batch_size, 29, 36, 30),
+        filter_shape=(nkerns[0], 29, 3, 3),
+        poolsize=(2, 2))
+
+
+
+def evaluate_lenet5(learning_rate=0.02, n_epochs=200,
+                    nkerns=[10,10,10], batch_size=20):
+    """ Demonstrates lenet on MNIST dataset
+
+    :type learning_rate: float
+    :param learning_rate: learning rate used (factor for the stochastic
+                          gradient)
+
+    :type n_epochs: int
+    :param n_epochs: maximal number of epochs to run the optimizer
+
+    :type dataset: string
+    :param dataset: path to the dataset used for training /testing (MNIST here)
+
+    :type nkerns: list of ints
+    :param nkerns: number of kernels on each layer
+    """
+    rng = np.random.RandomState(13455)
+
+    #TODO change this to tensorflow
+    x = T.tensor4('x')   # the data is presented as rasterized images
+
+    classifier=conv_classifier(
+                rng=rng,
+                input=x,
+                batch_size=batch_size,
+                nkerns=nkerns) 
 
 
 if __name__ == '__main__':
-	print ("hi")
-    # with open("environment.yml", 'r') as stream:
-	   #  try:
-	   #      print(yaml.load(stream))
-	   #  except yaml.YAMLError as exc:
-	   #      print(exc)
+	evaluate_lenet5()
