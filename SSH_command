@@ -1,0 +1,10 @@
+1. Login name: HsuTs, password: CIS537Tensorflow! (including exclamation mark)
+
+2. Set up VPN: Download BIG-IP Edge Client http://www.uphs.upenn.edu/network/index_vpn.html,
+and follow the instruction here: http://www.uphs.upenn.edu/network/docs/Duo_PennVPN.pdf
+
+3. Enroll two factor authentication, you may want to refer here:
+IOS: http://www.uphs.upenn.edu/network/docs/Duo_iOS.pdf
+Android: http://www.uphs.upenn.edu/network/docs/Duo_Android.pdf
+
+4. After VPN set up, type command "ssh be537_2018@CBIG-DL.uphs.upenn.edu" in your terminal, and the password is UpennBE_537. 
