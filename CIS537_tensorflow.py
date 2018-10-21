@@ -13,6 +13,7 @@ import numpy as np
 import tensorflow as tf
 
 
+
 class LeNetConvPoolLayer(object):
     def __init__(self,rng,input,filter_shape,image_shape,poolsize=(2,2)):
         
@@ -24,20 +25,38 @@ class LeNetConvPoolLayer(object):
         W_bound=np.sqrt(6./(fan_in + fan_out))
 
 
-        #TODO need to change these theano to tensorlow
-        self.W= theano.shared(
-            np.asarray(rng.uniform(low=-W_bound,high=W_bound,size=filter_shape),
+        # Theano code
+        # self.W= theano.shared(
+        #     np.asarray(rng.uniform(low=-W_bound,high=W_bound,size=filter_shape),
+        #                dtype=theano.config.floatX),borrow=True)
+
+        # tf code
+        self.W = tf.get_variable('W', 
+        	np.asarray(rng.uniform(low=-W_bound,high=W_bound,size=filter_shape),
                        dtype=theano.config.floatX),borrow=True)
+
         
         b_values=np.zeros((filter_shape[0],),dtype=theano.config.floatX)
-        self.b=theano.shared(value=b_values,borrow=True)
+
+        # Theano code
+        # self.b=theano.shared(value=b_values,borrow=True)
+
+        # tf code
+        self.b = tf.get_variable('b', b_values)
+
         
-        #convolve input feature maps with filters            
+        #convolve input feature maps with filters  
+        # theano code          
         conv_out=conv.conv2d(
             input=input,
             filters=self.W,
             filter_shape=filter_shape,
             image_shape=image_shape)
+
+        conv_out = tf.nn.conv2d(
+        	input=input,
+            filters=self.W,
+        	)
 
         #downsample each feature map individually via max pooling        
         pooled_out=downsample.max_pool_2d(
@@ -90,6 +109,7 @@ def evaluate_lenet5(learning_rate=0.02, n_epochs=200,
     rng = np.random.RandomState(13455)
 
     #TODO change this to tensorflow
+    #x = tf.get_variable('x')
     x = T.tensor4('x')   # the data is presented as rasterized images
 
     classifier=conv_classifier(
