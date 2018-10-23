@@ -20,9 +20,12 @@ class conv_classifier(object):
 	def __init__(feature, lables, mode, batch_size):
          
   		# Input Layer
-  		input_layer = tf.reshape(features["x"], [batch_size,29,36,30])
+  		# TODO check the size
+  		input_layer = tf.reshape(features["x"], [batch_size, 29, 36, 30])
 
   		# Convolutional Layer #1
+  		# Applies 32 5x5 filters (extracting 5x5-pixel subregions), with tanh activation function
+  		# TODO check filter and kernel size
   		conv1 = tf.layers.conv2d(
       		inputs=input_layer,
       		filters=32,
@@ -31,9 +34,12 @@ class conv_classifier(object):
       		activation=tf.nn.tanh)
 
   		# Pooling Layer #1
+  		# Performs max pooling with a 2x2 filter and stride of 2 
+  		# (which specifies that pooled regions do not overlap)
   		pool1 = tf.layers.max_pooling2d(inputs=conv1, pool_size=[2, 2], strides=2)
 
   		# Convolutional Layer #2 and Pooling Layer #2
+  		# Applies 64 5x5 filters, with tanh activation function
   		conv2 = tf.layers.conv2d(
       		inputs=pool1,
       		filters=64,
@@ -41,17 +47,21 @@ class conv_classifier(object):
       		padding="same",
       		activation=tf.nn.tanh)
 
+  		# Again, performs max pooling with a 2x2 filter and stride of 2
   		pool2 = tf.layers.max_pooling2d(inputs=conv2, pool_size=[2, 2], strides=2)
 
   		# Dense Layer
   		pool2_flat = tf.reshape(pool2, [-1, 7 * 7 * 64])
-  
+  		
+  		#1,024 neurons, with dropout regularization rate of 0.4 
+  		# (probability of 0.4 that any given element will be 
+  		# dropped during training)
   		dense = tf.layers.dense(inputs=pool2_flat, units=1024, activation=tf.nn.tanh)
-
   		dropout = tf.layers.dropout(
       		inputs=dense, rate=0.4, training=mode == tf.estimator.ModeKeys.TRAIN)
 
   		# Logits Layer
+  		# 10 neurons, one for each digit target class (0–9).
   		logits = tf.layers.dense(inputs=dropout, units=10)
 
   		predictions = {
@@ -112,7 +122,7 @@ def evaluate_lenet5(dataset='z:/Andrew/deep_learning/data/ppg_train_valid_test_3
   	# The model_dir argument specifies the directory 
   	# where model data (checkpoints) will be saved
     classifier = tf.estimator.Estimator(
-    	model_fn=conv_classifier, model_dir=dataset)
+    	model_fn=conv_classifier, model_dir="CIS537_tensorflow")
 
     # Set up logging for predictions
 	tensors_to_log = {"probabilities": "softmax_tensor"}
