@@ -40,6 +40,7 @@ class conv_classifier(object):
 
   		# Convolutional Layer #2 and Pooling Layer #2
   		# Applies 64 5x5 filters, with tanh activation function
+  		# TODO check filter and kernel size
   		conv2 = tf.layers.conv2d(
       		inputs=pool1,
       		filters=64,
@@ -53,7 +54,7 @@ class conv_classifier(object):
   		# Dense Layer
   		pool2_flat = tf.reshape(pool2, [-1, 7 * 7 * 64])
   		
-  		#1,024 neurons, with dropout regularization rate of 0.4 
+  		# 1,024 neurons, with dropout regularization rate of 0.4 
   		# (probability of 0.4 that any given element will be 
   		# dropped during training)
   		dense = tf.layers.dense(inputs=pool2_flat, units=1024, activation=tf.nn.tanh)
@@ -137,6 +138,10 @@ def evaluate_lenet5(dataset='z:/Andrew/deep_learning/data/ppg_train_valid_test_3
     	num_epochs=None,
     	shuffle=True)
 
+    ###############
+    # TRAIN MODEL #
+    ###############
+    print '... training'
 	classifier.train(
     	input_fn=train_input_fn,
     	steps=20000,
