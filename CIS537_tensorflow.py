@@ -17,7 +17,7 @@ from __future__ import print_function
 tf.logging.set_verbosity(tf.logging.INFO)
 
 class conv_classifier(object):
-	def __init__(feature, lables, mode, batch_size):
+	def __init__(feature, labels, mode, batch_size):
          
   		# Input Layer
   		# TODO check the size
