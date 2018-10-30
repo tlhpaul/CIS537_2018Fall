@@ -11,8 +11,7 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 
 class conv_classifier(object):
-<<<<<<< HEAD
-	def __init__(feature, lables, mode, batch_size):
+	def __init__(feature, labels, mode, batch_size):
          
   		# Input Layer
   		# TODO check the size
@@ -89,7 +88,7 @@ class conv_classifier(object):
 
   		return tf.estimator.EstimatorSpec(
       		mode=mode, loss=loss, eval_metric_ops=eval_metric_ops)
-=======
+
     def __init__(features, lables, mode, batch_size):
 
         # Input Layer
