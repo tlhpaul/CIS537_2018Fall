@@ -59,8 +59,8 @@ class conv_classifier(object):
             inputs=dense, rate=0.4, training=mode == tf.estimator.ModeKeys.TRAIN)
 
         # Logits Layer
-        # 10 neurons, one for each digit target class (0–9).
-        logits = tf.layers.dense(inputs=dropout, units=10)
+        # 2 neurons, one for positive and one for negative
+        logits = tf.layers.dense(inputs=dropout, units=2)
 
         predictions = {
             # Generate predictions (for PREDICT and EVAL mode)
