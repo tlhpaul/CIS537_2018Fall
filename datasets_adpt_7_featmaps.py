@@ -8,11 +8,9 @@ Created on Fri Feb 26 11:12:23 2016
 import cPickle
 import numpy as np
 import random
-import theano
-import theano.tensor as T
 
 
-f=open('Z:/Andrew/deep_learning/dicts/data_combo_3_normed_overallsamples.p','r')
+f=open('Z:../deep_learning/data_combo_3_normed_overallsamples.p','r')
 data=cPickle.load(f)
 f.close()
 
@@ -239,11 +237,11 @@ data_4 = tuple([train_4,valid_4,test_4])
 return_data = tuple([data_1,data_2,data_3,data_4])
 ##############################################################################
 
-f=open('z:/Andrew/deep_learning/data/ppg_train_valid_test_36x30_feat_3_normed_overallsamples_2_4fold.p','w')
+f=open('z:../deep_learning/ppg_train_valid_test_36x30_feat_3_normed_overallsamples_2_4fold.p','w')
 cPickle.dump(return_data,f)
 f.close()
 
-f=open('z:/Andrew/deep_learning/data/ppg_train_valid_test_36x30_feat_3_normed_overallsamples_2_4fold.p','r')
+f=open('z:../deep_learning/ppg_train_valid_test_36x30_feat_3_normed_overallsamples_2_4fold.p','r')
 data=cPickle.load(f)
 f.close()
 
@@ -253,13 +251,14 @@ len(data[0][0][0])
 len(data[0][0][0][0])
 data[0][0][0][0][0].shape
 
-rval=load_data_6('z:/Andrew/deep_learning/data/ppg_train_valid_test_36x30_feat_3_normed_ineachsample_4fold.p')
+rval=load_data_6('z:../deep_learning/ppg_train_valid_test_36x30_feat_3_normed_ineachsample_4fold.p')
 len(rval)
 len(rval[0])
 len(rval[0][0].eval())
 rval[0][0].eval()[0].shape
 
 import os
+# TODO ? 
 os.chdir('z:/Andrew/deep_learning/modules')
 
 def load_data_6(dataset):
@@ -277,7 +276,7 @@ def load_data_6(dataset):
 
     # Load the dataset
     f = open(dataset, 'r')
-    train_set, valid_set, test_set = cPickle.load(f)[0]
+    train_set, valid_set, test_set = pickle.load(f)[0]
     f.close()
         
     #train_set, valid_set, test_set format: tuple(input, target)
@@ -297,12 +296,11 @@ def load_data_6(dataset):
         variable) would lead to a large decrease in performance.
         """
         data_x, data_y = data_xy
-        shared_x = theano.shared(np.asarray(data_x,
-                                               dtype=theano.config.floatX),
-                                 borrow=borrow)
-        shared_y = theano.shared(np.asarray(data_y,
-                                               dtype=theano.config.floatX),
-                                 borrow=borrow)
+
+        shared_x = tf.Variable(np.asarray(data_x))
+        shared_y = tf.Variable(np.asarray(data_x))
+
+
         # When storing data on the GPU it has to be stored as floats
         # therefore we will store the labels as ``floatX`` as well
         # (``shared_y`` does exactly that). But during our computations

@@ -10,10 +10,10 @@ import numpy as np
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
 import nibabel as nib
-import cPickle
+import pickle
 import pandas as pd
 
-location='Z:/Aimilia/DeepLearningDemo/input_Feb2016/feature maps/'
+location='Z:../data/'
 
 feature_maps_all={}
 for i in os.listdir(location):
@@ -131,8 +131,8 @@ f_masked_normed_all['R_MLO_20527_1']['R_MLO_20527_1_norm_cooccurrence_win_63_sli
 test_img=f_masked_normed_all['R_MLO_20527_1']['R_MLO_20527_1_norm_cooccurrence_win_63_sliding_63_numbin_128_offset_11_entropy']
 plt.imshow(test_img)
 
-f=open('Z:/Andrew/deep_learning/dicts/features_36_by_30_3_normed_ineachsample.p','w')
-cPickle.dump(f_masked_normed_all,f)
+f=open('Z:../deep_learning/features_36_by_30_3_normed_ineachsample.p','w')
+pickle.dump(f_masked_normed_all,f)
 f.close()
 
 
@@ -161,6 +161,8 @@ f.close()
 #x==np.sum(xdim)
 
 #importing case-control status
+
+# TODO issing this? 
 cc_status=pd.read_excel('Z:/Aimilia/DeepLearningDemo/input_Feb2016/case_control_status.xlsx',0)
 cc_status
 
@@ -179,8 +181,8 @@ for key_1 in target_dict.keys():
     
 data=zip(feat_list,target_list)
 
-f=open('Z:/Andrew/deep_learning/dicts/data_combo_3_normed_ineachsample.p','w')
-cPickle.dump(data,f)
+f=open('Z:../deep_learning/data_combo_3_normed_ineachsample.p','w')
+pickle.dump(data,f)
 f.close()
 
 #f=open('Z:/Andrew/deep_learning/dicts/data_combo_3_normed_ineachsample.p','r')

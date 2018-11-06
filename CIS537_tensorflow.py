@@ -6,6 +6,7 @@ Created on Mon Oct 08 13:11:15 2018
 """
 import numpy as np
 import tensorflow as tf
+import pickle
 
 tf.logging.set_verbosity(tf.logging.INFO)
 
@@ -92,6 +93,7 @@ class conv_classifier(object):
 
         return tf.estimator.EstimatorSpec(
             mode=mode, loss=loss, eval_metric_ops=eval_metric_ops)
+
 
 def evaluate_lenet5(dataset='z:/Andrew/deep_learning/data/ppg_train_valid_test_36x30_feat_3_normed_overallsamples_2_4fold.p',
                     nkerns=[10, 10, 10], batch_size=20):
