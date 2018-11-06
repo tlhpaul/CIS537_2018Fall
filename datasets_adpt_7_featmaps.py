@@ -258,8 +258,9 @@ len(rval[0][0].eval())
 rval[0][0].eval()[0].shape
 
 import os
-# TODO ? 
-os.chdir('z:/Andrew/deep_learning/modules')
+
+# current working directory
+# os.chdir('z:/Andrew/deep_learning/modules')
 
 def load_data_6(dataset):
     ''' Loads the dataset
