@@ -6,10 +6,9 @@ tf.logging.set_verbosity(tf.logging.INFO)
 
 
 def conv_classifier(features,labels,mode):
-    batch_size = 10
     # Input Layer
     # TODO check the size
-    input_layer = tf.reshape(features["x"], [batch_size, 34, 26, 29])
+    input_layer = tf.reshape(features["x"], [-1, 34, 26, 29])
 
     # Convolutional Layer #1
     # Applies 32 5x5 filters (extracting 5x5-pixel subregions), with tanh activation function
