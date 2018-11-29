@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 """
 Created on Sat Jan 09 20:57:15 2016
@@ -325,3 +326,4 @@ def evaluate_lenet5(learning_rate=0.02, n_epochs=200,
 
 if __name__ == '__main__':
     evaluate_lenet5()
+   
