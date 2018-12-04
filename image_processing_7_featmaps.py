@@ -81,14 +81,14 @@ for key in fsep.keys():
     max_dict[key]=np.max(np.abs(np.round(fsep[key])))
     
 
-epsilon = 0.00000001
-f_masked_normed_all={}
-for key_1 in feature_maps_masked_all.keys():
-    f_masked_normeds={}
-    for key_2 in feature_maps_masked_all[key_1].keys():
-        f_masked_normed = feature_maps_masked_all[key_1][key_2]/(max_dict[key_2.split('_norm_')[1]]+epsilon)
-        f_masked_normeds[key_2]=f_masked_normed
-    f_masked_normed_all[key_1]=f_masked_normeds
+# epsilon = 0.00000001
+# f_masked_normed_all={}
+# for key_1 in feature_maps_masked_all.keys():
+#     f_masked_normeds={}
+#     for key_2 in feature_maps_masked_all[key_1].keys():
+#         f_masked_normed = feature_maps_masked_all[key_1][key_2]/(max_dict[key_2.split('_norm_')[1]]+epsilon)
+#         f_masked_normeds[key_2]=f_masked_normed
+#     f_masked_normed_all[key_1]=f_masked_normeds
 
 # Normalizing for each sample's feature map
 epsilon = 0.00000001
