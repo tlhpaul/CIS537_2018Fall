@@ -88,7 +88,7 @@ def conv_classifier(features,labels,mode):
 
 def evaluate_lenet5():
 
-    f = open('F:/UPENNACADS/CISBE537/PROJECT/B3537_2018/B3537_2018/dicts/datastage2_all.p', 'rb')
+    f = open('datastage2_all.p', 'rb')
     data = pickle.load(f)
     f.close()
 
@@ -115,7 +115,7 @@ def evaluate_lenet5():
 
 
     classifier = tf.estimator.Estimator(
-        model_fn=conv_classifier, model_dir="F:/UPENNACADS/CISBE537/PROJECT/B3537_2018/B3537_2018/dicts/model")
+        model_fn=conv_classifier, model_dir="model")
 
     # Set up logging for predictions
     tensors_to_log = {"probabilities": "softmax_tensor"}

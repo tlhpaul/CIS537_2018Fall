@@ -1,10 +1,9 @@
 
 import _pickle as pickle
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tf
 
-
-f=open('F:/UPENNACADS/CISBE537/PROJECT/B3537_2018/B3537_2018/dicts/data_all.p','rb')
+f=open('processed_data.p','rb')
 data=pickle.load(f)
 f.close()
 
@@ -32,7 +31,7 @@ labels = np.asarray(labels)
 data2=zip(features,labels)
 
 name = 'all'
-savePath = 'F:/UPENNACADS/CISBE537/PROJECT/B3537_2018/B3537_2018/dicts/datastage2_'+ name + '.p'
+savePath = './datastage2_'+ name + '.p'
 
 #The output file needs to be opened in binary mode:In Python 3, Binary modes 'wb', 'rb' must be specified whereas in Python 2x, they are not needed
 f=open(savePath,'wb')

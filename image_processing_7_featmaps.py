@@ -90,11 +90,9 @@ for i in range(29):  #over all different features
     min_all[i]=min_list
     max_all[i]=max_list
 
-max_dict={}
-for key in fsep.keys():
-    max_dict[key]=np.max(np.abs(np.round(fsep[key].astype(np.double))))
-    
-
+# max_dict={}
+# for key in fsep.keys():
+#     max_dict[key]=np.max(np.abs(np.round(fsep[key])))
 # epsilon = 0.00000001
 # f_masked_normed_all={}
 # for key_1 in feature_maps_masked_all.keys():
@@ -116,7 +114,7 @@ for key_1 in feature_maps_masked_all.keys():
 
 
 # Importing case-control status
-cc_status=pd.read_excel('F:/UPENNACADS/CISBE537/PROJECT/B3537_2018/B3537_2018/controlcase.xlsx',0)
+cc_status=pd.read_excel('controlcase.xlsx', 0)
 
 target_dict={}
 for i in np.arange(len(cc_status.ix[:,0])):
@@ -131,7 +129,7 @@ for key_1 in feature_maps_masked_all.keys():
 
 data=zip(feat_list,target_list)
 
-savePath = 'F:/UPENNACADS/CISBE537/PROJECT/B3537_2018/B3537_2018/dicts/data_'+ str(count) + '.p'
+savePath = './processed_data.p'
 
 #The output file needs to be opened in binary mode:In Python 3, Binary modes 'wb', 'rb' must be specified whereas in Python 2x, they are not needed
 f=open(savePath,'wb')
