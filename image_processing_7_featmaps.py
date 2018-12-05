@@ -4,45 +4,59 @@ import nibabel as nib
 import _pickle as pickle
 import pandas as pd
 
-location = 'F:/UPENNACADS/CISBE537/PROJECT/B3537_2018/B3537_2018/Dataver2/'
+location = '/Users/paulhsu/CIS537_Data/'
 
 feature_maps_all={}
 masks_all={}
 count2 = 0
 
-
 #10 minutes for entire dataset on the loop below
 #below code storing only left image
 for i in os.listdir(location):  #user id
-    print('Patient id : ', i)
-    for j in os.listdir(location + i):   #left and right
-        for k in os.listdir(location+i+'/'+j): #feature_masks and sheet
-            if 'sheet'  not in k:
-                for l in os.listdir(location+i+'/'+j+'/'+k):  #feature and masks
-                    if 'mask' not in l:
-                        feature_maps = {}
-                        count = 0
-                        for m in os.listdir(location+i+'/'+j+'/'+k+'/'+l): #feature
-                            if m.endswith(".gz"):
+	print('Patient id : ', i)
+    # Skip '.DS_Store' file in mac os, which is not a directory
+	if ".DS_Store" in i:
+		continue
+	#left and right
+	for j in os.listdir(location + i):
+    	# Skip '.DS_Store' file in mac os, which is not a directory
+		if ".DS_Store" in j:
+			continue
+		for k in os.listdir(location+i+'/'+j): #feature_masks and sheet
+        	
+        	# Skip '.DS_Store' file in mac os, which is not a directory
+			if ".DS_Store" in k:
+				continue
+			if 'sheet'  not in k:
+				for l in os.listdir(location+i+'/'+j+'/'+k):  #feature and masks
+					if 'mask' not in l:
+						feature_maps = {}
+						count = 0
+
+						# Skip '.DS_Store' file in mac os, which is not a directory
+						if ".DS_Store" in l:
+							continue						
+						for m in os.listdir(location+i+'/'+j+'/'+k+'/'+l): #feature
+							if m.endswith(".gz"):
                                 #print(m)
-                                loc = (location + i + '/' + j + '/' + k + '/' + l + '/' + m)
-                                feature_map = np.nan_to_num(nib.load(loc).get_data().T)
-                                feature_maps[count]= feature_map
-                                count = count + 1
-                    else:
-                        mask = {}
-                        for n in os.listdir(location + i + '/' + j + '/' + k + '/' + l):
+								loc = (location + i + '/' + j + '/' + k + '/' + l + '/' + m)
+								feature_map = np.nan_to_num(nib.load(loc).get_data().T)
+								feature_maps[count]= feature_map
+								count = count + 1
+					else:
+						mask = {}
+						for n in os.listdir(location + i + '/' + j + '/' + k + '/' + l):
 
-                            if n.endswith(".gz"):
-                                #print(n)
-                                mask = nib.load(location + i + '/' + j + '/' + k + '/' + l + '/' + n).get_data().T
-    count2 = count2 + 1
-    if count2 == 400:
-        break
-    masks_all[i] = mask
+							if n.endswith(".gz"):
+								#print(n)
+								mask = nib.load(location + i + '/' + j + '/' + k + '/' + l + '/' + n).get_data().T
+	count2 = count2 + 1
+	if count2 == 400:
+		break
+	masks_all[i] = mask
 
 
-    feature_maps_all[i]=feature_maps
+	feature_maps_all[i]=feature_maps
 
 
 #MULTIPLYING THE FEATURES AND MASKS
@@ -78,7 +92,7 @@ for i in range(29):  #over all different features
 
 max_dict={}
 for key in fsep.keys():
-    max_dict[key]=np.max(np.abs(np.round(fsep[key])))
+    max_dict[key]=np.max(np.abs(np.round(fsep[key].astype(np.double))))
     
 
 # epsilon = 0.00000001
@@ -103,7 +117,6 @@ for key_1 in feature_maps_masked_all.keys():
 
 # Importing case-control status
 cc_status=pd.read_excel('F:/UPENNACADS/CISBE537/PROJECT/B3537_2018/B3537_2018/controlcase.xlsx',0)
-
 
 target_dict={}
 for i in np.arange(len(cc_status.ix[:,0])):
