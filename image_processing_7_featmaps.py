@@ -4,6 +4,7 @@ import nibabel as nib
 import _pickle as pickle
 import pandas as pd
 
+# Replace the location value where you have the data
 location = '/Users/paulhsu/CIS537_Data/'
 
 feature_maps_all={}
@@ -51,8 +52,8 @@ for i in os.listdir(location):  #user id
 								#print(n)
 								mask = nib.load(location + i + '/' + j + '/' + k + '/' + l + '/' + n).get_data().T
 	count2 = count2 + 1
-	if count2 == 400:
-		break
+	# if count2 == 400:
+	# 	break
 	masks_all[i] = mask
 
 
@@ -135,4 +136,3 @@ savePath = './processed_data.p'
 f=open(savePath,'wb')
 pickle.dump(data,f)
 f.close()
-
