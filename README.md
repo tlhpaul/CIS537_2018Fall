@@ -11,7 +11,7 @@ Make sure you have installed conda. Then you can simply run
 It will run from data processing till running the model. If you want to do step by step, please see the follwoing instructions.
 
 ### Data processing
-Run
+Run in the following order
 ```
 python rename.py
 ```
@@ -23,7 +23,7 @@ python image_processing_7_featmaps.py
 python datasets_adpt_7_featmaps.py
 ```
 
-#### Set up conda environment
+### Set up conda environment
 We use conda yaml file to configure the enviornment. You can find
 the shell script here: https://conda.io/miniconda.html
 
@@ -52,7 +52,7 @@ Note, to exit the environment, simply run
 conda deactivate
 ```
 
-#### Run the model
+### Run the model
 Simply run 
 ```
 python CIS537_tensorflow.py
