@@ -61,7 +61,7 @@ for feature_mask_path in feature_masks:
         # Normalize feature maps so that the maximum value in each is 1
         epsilon = 1e-8
         normalized_masked_feature_map = masked_feature_map \
-            / (np.abs(masked_feature_map.max()) + epsilon)
+            / (np.abs(masked_feature_map).max() + epsilon)
 
         # Extract the feature name from its filename. Eg: norm_win_97_sliding_97_box_counting from
         # DPm.1.2.840.113681.2863050709.1375427076.3328_norm_win_97_sliding_97_box_counting.nii.gz
