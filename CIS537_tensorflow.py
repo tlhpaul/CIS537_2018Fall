@@ -1,7 +1,6 @@
 import numpy as np
 import tensorflow as tf
 import _pickle as pickle
-
 tf.logging.set_verbosity(tf.logging.INFO)
 
 
@@ -80,7 +79,20 @@ def conv_classifier(features,labels,mode):
     # Add evaluation metrics (for EVAL mode)
     eval_metric_ops = {
         "accuracy": tf.metrics.accuracy(
-            labels=labels, predictions=predictions["classes"])}
+            labels=labels, predictions=predictions["classes"]), "auc": tf.metrics.auc(labels=labels, predictions=predictions["classes"])}
+
+    #
+    # accuracy = tf.metrics.accuracy(
+    #         labels=labels, predictions=predictions["classes"])
+    #
+    # metrics = {'accuracy': accuracy}
+    # tf.summary.scalar('accuracy', accuracy[1])
+    #
+    # if mode == tf.estimator.ModeKeys.EVAL:
+    #     return tf.estimator.EstimatorSpec(
+    #         mode, loss=loss, eval_metric_ops=metrics)
+
+
 
     return tf.estimator.EstimatorSpec(
         mode=mode, loss=loss, eval_metric_ops=eval_metric_ops)
@@ -88,7 +100,7 @@ def conv_classifier(features,labels,mode):
 
 def evaluate_lenet5():
 
-    f = open('datastage2_all.p', 'rb')
+    f = open('F:/UPENNACADS/CISBE537/PROJECT/B3537_2018/B3537_2018/dicts/datastage2_train_norm_balanced_all.p', 'rb')
     data = pickle.load(f)
     f.close()
 
@@ -102,30 +114,38 @@ def evaluate_lenet5():
 
     #460 controls, 115 cases
 
-   # dataset = tf.data.Dataset.from_tensor_slices((features, labels))
-   # iter = dataset.make_initializable_iterator()
-   # features, labels = iter.get_next()
 
+    train_data = all_data[0:400]
+    train_labels = all_labels[0:400]
 
-    train_data = all_data[0:300]
-    train_labels = all_labels[0:300]
+    f = open('F:/UPENNACADS/CISBE537/PROJECT/B3537_2018/B3537_2018/dicts/datastage2_test_norm_balanced_all.p', 'rb')
+    data = pickle.load(f)
+    f.close()
 
-    eval_data = all_data[300:]
-    eval_labels = all_labels[300:]
+    data = list(data)
+
+    all_data = [a[0] for a in data]
+    all_labels = [a[1] for a in data]
+
+    all_data = np.asarray(all_data)
+    all_labels = np.asarray(all_labels)
+
+    eval_data = all_data
+    eval_labels = all_labels
 
 
     classifier = tf.estimator.Estimator(
-        model_fn=conv_classifier, model_dir="model")
+        model_fn=conv_classifier, model_dir="F:/UPENNACADS/CISBE537/PROJECT/B3537_2018/B3537_2018/dicts/model6_balanced")
 
     # Set up logging for predictions
-    tensors_to_log = {"probabilities": "softmax_tensor"}
-    logging_hook = tf.train.LoggingTensorHook(
-        tensors=tensors_to_log, every_n_iter=50)
+    #tensors_to_log = {"probabilities": "softmax_tensor"}
+    #logging_hook = tf.train.LoggingTensorHook(
+     #   tensors=tensors_to_log, every_n_iter=50)
 
     train_input_fn = tf.estimator.inputs.numpy_input_fn(
         x={"x": train_data},
         y=train_labels,
-        batch_size=10,
+        batch_size=32,
         num_epochs=None,
         shuffle=True)
 
@@ -135,8 +155,8 @@ def evaluate_lenet5():
     print('... training')
     classifier.train(
         input_fn=train_input_fn,
-        steps=2000,
-        hooks=[logging_hook])
+        steps=7000,
+        )
 
     # Evaluate the model and print results
     eval_input_fn = tf.estimator.inputs.numpy_input_fn(
@@ -146,6 +166,8 @@ def evaluate_lenet5():
         shuffle=False)
 
     eval_results = classifier.evaluate(input_fn=eval_input_fn)
+
+
     print(eval_results)
 
 
