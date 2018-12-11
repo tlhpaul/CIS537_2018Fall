@@ -16,11 +16,13 @@ y_test = to_categorical(y_test, 10)
 
 model = Sequential([
     Conv2D(64, kernel_size=(3, 3), activation='relu', input_shape=(28, 28, 1)),
-    Dropout(0.25),
+    MaxPooling2D(pool_size=(2,2)),
+    Dropout(0.2),
     Conv2D(32, kernel_size=(3, 3), activation='relu'),
     Dropout(0.4),
     MaxPooling2D(pool_size=(2,2)),
     Flatten(),
+    Dense(10, activation='relu'),
     Dense(10, activation='softmax')
 ])
 
