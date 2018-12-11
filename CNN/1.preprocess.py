@@ -1,5 +1,3 @@
-
-#%%
 import pathlib
 import pickle
 import random
@@ -69,13 +67,13 @@ print(f'Percent cases in training data: {num_training_cases / len(training_patie
 
 # Write the ids of patients in training/testing to a file
 # so that our methods can be replicated exactly
-with open('data/training_patients.txt', 'w') as train_file:
+with open('../data/training_patients.txt', 'w') as train_file:
     train_file.write('patient_id,case_status\n')
     for patient_id in training_patients:
         case_status = patient_id_to_case[int(patient_id)]
         train_file.write(f'{patient_id},{case_status}\n')
 
-with open('data/testing_patients.txt', 'w') as test_file:
+with open('../data/testing_patients.txt', 'w') as test_file:
     test_file.write('patient_id,case_status\n')
     for patient_id in testing_patients:
         case_status = patient_id_to_case[int(patient_id)]
