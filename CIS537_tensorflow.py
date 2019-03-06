@@ -1,9 +1,9 @@
 import numpy as np
 import tensorflow as tf
 import _pickle as pickle
+from sklearn.metrics import roc_auc_score
 
 tf.logging.set_verbosity(tf.logging.INFO)
-
 
 def conv_classifier(features,labels,mode):
     # Input Layer
@@ -146,6 +146,24 @@ def evaluate_lenet5():
         shuffle=False)
 
     eval_results = classifier.evaluate(input_fn=eval_input_fn)
+
+    # TODO AUC
+    # a = tf.Variable(eval_labels)
+    # b = tf.Variable(eval_results)
+    # auc = tf.contrib.metrics.streaming_auc(a, b)
+    # sess = tf.Session()
+    # sess.run(tf.initialize_all_variables())
+    # sess.run(tf.initialize_local_variables()) # try commenting this line and you'll get the error
+    # train_auc = sess.run(auc)
+    # print(train_auc)
+    
+    # with tf.Session() as sess:
+    #     sess.run(tf.global_variables_initializer())
+    #     sess.run(tf.local_variables_initializer())
+    #     _,roc_score = tf.metrics.auc(eval_labels, eval_results)
+    #     print(sess.run(roc_score, feed_dict={x : eval_data, y : eval_labels, p_keep_input: 1.0, p_keep_hidden: 1.0}))
+    
+    
     print(eval_results)
 
 

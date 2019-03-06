@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 # location = sys.argv[1]
-location = 'data/secure/'
+location = '../CIS537_Data/'
 
 # Rename folders
 data_path = pathlib.Path(location)

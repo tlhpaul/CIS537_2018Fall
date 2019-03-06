@@ -9,14 +9,14 @@ from keras.regularizers import l1, l2
 from keras.callbacks import EarlyStopping
 from sklearn.metrics import roc_auc_score
 
-from data_gen import augment_data
+#from data_gen import augment_data
 
 
-with open('data/train_data.pkl', 'rb') as f:
+with open('../train_data.pkl', 'rb') as f:
     x_train, train_labels = pickle.load(f)
 y_train = to_categorical(train_labels)
 
-with open('data/test_data.pkl', 'rb') as f:
+with open('../test_data.pkl', 'rb') as f:
     x_test, test_labels = pickle.load(f)
 y_test = to_categorical(test_labels)
 
